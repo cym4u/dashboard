@@ -2,7 +2,7 @@ version: "3"
 services:
   grafana:
     container_name: grafana
-    image: grafana/grafana
+    image: docker.ready4.fun/grafana/grafana
     restart: unless-stopped
     network_mode: host
     volumes:
@@ -11,7 +11,7 @@ services:
 
   prometheus:
     container_name: prometheus
-    image: prom/prometheus
+    image: docker.ready4.fun/prom/prometheus
     restart: unless-stopped
     network_mode: host
     volumes:
@@ -28,24 +28,25 @@ services:
 
   cadvisor:
     container_name: cadvisor
-    image: gcr.io/google-containers/cadvisor
+    image: gcr.ready4.fun/cadvisor/cadvisor:latest
     restart: unless-stopped
     network_mode: host
-    privileged: true
     volumes:
-      - /:/rootfs:ro
-      - /var/run:/var/run:ro
-      - /sys:/sys:ro
-      - /var/lib/docker/:/var/lib/docker:ro
-      - /dev/disk/:/dev/disk:ro
+      - "/:/rootfs"
+      - "/var/run:/var/run"
+      - "/sys:/sys"
+      - "/var/lib/docker/:/var/lib/docker"
+      - "/dev/disk/:/dev/disk"
+    privileged: true
     devices:
-      - /dev/kmsg
+      - "/dev/kmsg"
     command:
       - '-port=9250'
 
+
   node-exporter:
     container_name: node-exporter
-    image: prom/node-exporter
+    image: docker.ready4.fun/prom/node-exporter
     restart: unless-stopped
     network_mode: host
     pid: host
@@ -61,7 +62,7 @@ services:
 
   smartctl:
     container_name: smartctl
-    image: matusnovak/prometheus-smartctl
+    image: docker.ready4.fun/matusnovak/prometheus-smartctl
     restart: unless-stopped
     privileged: true
     network_mode: host
